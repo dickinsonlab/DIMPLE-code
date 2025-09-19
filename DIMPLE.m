@@ -1,5 +1,5 @@
 %Set data directory
-[peaklist] = batchcdfread('/Users/andre/OneDrive/Desktop/cdf files/B73-root1-7/B73_root1_seven',110);
+[peaklist] = batchcdfread('your file',number of rows);
 %Set threshold factor for enrichment over background intensity 
 minimum_fold_enrichment = 1.5;
 %Set hot pixel detection parameters, decreasing the threshold will make hot
@@ -316,6 +316,64 @@ for i = 1:max(T)
 end
 legend(labels);
 hold off
+
+%To have linescan annotated with cluster colormap
+ figure;
+
+% Create first axes for cluster assignments
+ax1 = axes('Position', [0.1, 0.75, 0.8, 0.15]); % [left, bottom, width, height]
+imagesc(B');
+colormap(ax1, cool); % Set a distinct colormap just for this subplot
+yticks([]);
+set(ax1, 'XTick', []);
+title('Cluster Assignments');
+
+% Create second axes for the linescan image
+ax2 = axes('Position', [0.1, 0.1, 0.8, 0.6]);
+imagesc(linescan(:, I));
+colormap(ax2, parula); % Set a different colormap here
+xlabel('Sorted Indices');
+ylabel('Line Position');
+title('Sorted Linescan');
+
+%To have dendrogram with cluster assignments aligned
+
+figure;
+
+% ===== 1. Dendrogram =====
+ax3 = axes('Position', [0.1, 0.3, 0.8, 0.6]);
+[H, ~, perm] = dendrogram(Z, 0);
+set(ax3, 'XTick', []);
+title('Dendrogram');
+
+% ===== 2. Cluster Assignment Row =====
+ax4 = axes('Position', [0.1, 0.2, 0.8, 0.05]);
+imagesc(T(perm)');
+colormap(ax4, jet); % or any distinct colormap
+set(ax4, 'XTick', [], 'YTick', []);
+title('Cluster Assignments');
+
+
+%Determine cluster assignment of peak
+idx = knnsearch(final_peaks,179.0105,'K',1);
+figure;imagesc(filtered_img(:,:,idx))
+highlight = T(I(idx));
+
+%Plot mean linescans for each cluster normalized to area under curve
+figure;
+hold on
+labels = string(zeros(1,max(T)));
+for i = 1:max(T)
+    if i == highlight
+        plot(median(linescan(:,T==i)')./sum(median(linescan(:,T==i)'),'all'),'LineWidth',3);
+    else
+        plot(median(linescan(:,T==i)')./sum(median(linescan(:,T==i)'),'all'),'LineWidth',1.5);
+    end
+    labels(i) = strcat('Cluster ',num2str(i));
+end
+legend(labels);
+hold off
+
 
 %Example search for peak of interest
 
