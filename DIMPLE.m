@@ -86,6 +86,8 @@ figure
 imshow(mask)
 [r,c] = find(mask);
 
+%Processing after mask, if you want to reanalyze start from this step
+
 %pseudo bulk sample spectrum
 mz_all = [];
 for i = 1:length(r)
@@ -302,7 +304,7 @@ idx = knnsearch(final_peaks,179.0105,'K',1);
 figure;imagesc(filtered_img(:,:,idx))
 highlight = T(I(idx));
 
-%Plot mean linscans for each cluster normalized to area under curve
+%Plot mean linescans for each cluster normalized to area under curve
 figure;
 hold on
 labels = string(zeros(1,max(T)));
