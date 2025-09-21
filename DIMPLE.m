@@ -317,7 +317,7 @@ end
 legend(labels);
 hold off
 
-%To have linescan annotated with cluster colormap
+%linescan annotated with cluster colormap
  figure;
 
 % Create first axes for cluster assignments
@@ -336,7 +336,7 @@ xlabel('Sorted Indices');
 ylabel('Line Position');
 title('Sorted Linescan');
 
-%To have dendrogram with cluster assignments aligned
+%dendrogram with cluster assignments aligned
 
 figure;
 
