@@ -9,3 +9,5 @@ B73 root 3 data can be accessed in B73-root-3-3 and B73-root2-3-worskpace.mat
 Oaxacan Green Root 1 data can be accessed in OG1 and OG1-workspace-2.mat
 Oaxacan Green Root 2 data can be accessed in OG5 and OG5-workspace.mat
 Oaxacan Green Root 3 data can be accessed in OG2-P11-0
+
+batchcdfread function developed by Yifan Meng in Dr. Richard N. Zare's lab at Stanford University
